@@ -1,3 +1,4 @@
+import axios from "axios"
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
@@ -11,22 +12,23 @@ const inputEl = formEl.querySelector('input');
 const loaderEl = document.querySelector('.loader');
 
 
-formEl.addEventListener('submit', (evn) => {
+formEl.addEventListener('submit', async (evn) => {
     evn.preventDefault();
     divEl.innerHTML = "";
     loaderEl.classList.remove("is-hidden");
     const valueInput = inputEl.value.trim();
 
-    fetchPhoto(valueInput).then(renderPhoto).then(() => {
-        const lightbox = new SimpleLightbox('.container-img a');
-        lightbox.refresh();
-    }).catch(error => {
+    try {
+        const data = await fetchPhoto(valueInput);
+        if (data.total === 0 || valueInput === "") {
+            throw new Error("Sorry, there are no images matching your search query. Please try again!")
+        }
+        renderPhoto(data);
+    } catch(error) {
         iziToast.show({ title: error.message, position: 'topRight', backgroundColor: 'red' }); 
-    }).finally(() => {
-        formEl.reset();    
-        loaderEl.classList.add("is-hidden");
-    });
+    }
+
+    formEl.reset();    
+    loaderEl.classList.add("is-hidden");
     
 });
-
-
