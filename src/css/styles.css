@@ -13,7 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+button {
+  border: none;
+}
+button:hover {
+  border: 1px  solid #000000;
+}
 h3 {
   margin: 0;
 }
@@ -132,9 +137,7 @@ ul {
   transform: translate(-50%, -50%);
 }
 
-.is-hidden {
-  display: none;
-}
+
 
 .d-flex {
   display: flex;
@@ -145,4 +148,13 @@ ul {
 
 .form-control {
   margin-bottom: 2px;
+}
+
+.button-loader {
+  display: block;
+  margin: 20px auto;
+} 
+
+.is-hidden {
+  display: none;
 }
