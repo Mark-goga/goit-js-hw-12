@@ -57,10 +57,13 @@ loaderMoreEl.addEventListener('click', async function onLoadMorePressed() {
         ceurentPage += 1;
         const data = await fetchPhoto(valueInput , ceurentPage);
         renderPhoto(data);
+        const lightbox = new SimpleLightbox('.container-img a');
+        lightbox.refresh();
+        
 
         smoothScrollOnLoadMore();
 
-        if (ceurentPage > totalPages) {
+        if (ceurentPage >= totalPages) {
             loaderMoreEl.classList.add('is-hidden');
             loaderMoreEl.removeEventListener('click', onLoadMorePressed);
             iziToast.show({title: "We're sorry, but you've reached the end of search results." , position: 'topRight'})
