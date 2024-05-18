@@ -19,6 +19,7 @@ formEl.addEventListener('submit', async (evn) => {
     evn.preventDefault();
     divEl.innerHTML = "";
     loaderEl.classList.remove("is-hidden");
+    loaderMoreEl.classList.add("is-hidden");
     valueInput = inputEl.value.trim();
     ceurentPage = 1;
     try {
@@ -33,6 +34,9 @@ formEl.addEventListener('submit', async (evn) => {
         totalPages = Math.ceil(data.total / PER_PAGE);
         if (totalPages > 1) {
             loaderMoreEl.classList.remove('is-hidden');
+            
+        } else {
+            iziToast.show({ title: "We're sorry, but you've reached the end of search results.", position: 'topRight' });
         }
     } catch(error) {
         iziToast.show({ title: error.message, position: 'topRight', backgroundColor: 'red' }); 
@@ -66,7 +70,7 @@ loaderMoreEl.addEventListener('click', async function onLoadMorePressed() {
         if (ceurentPage >= totalPages) {
             loaderMoreEl.classList.add('is-hidden');
             loaderMoreEl.removeEventListener('click', onLoadMorePressed);
-            iziToast.show({title: "We're sorry, but you've reached the end of search results." , position: 'topRight'})
+            iziToast.show({ title: "We're sorry, but you've reached the end of search results.", position: 'topRight' });
     }
     } catch(error) {
         
